@@ -53,7 +53,13 @@
 								<td><%response.write(userList.fields(0).value)%></td>
 								<td><%response.write(userList.fields(1).value)%></td>
 								<td><%response.write(userList.fields(2).value)%></td>
-								<td href=><a href="test.html">Update</a></td>
+								<td>
+									<form action="userService.asp" method="post">
+										<input type="hidden" name="action" value="updateUser"/>
+										<input type="hidden" name="userId" value="<%response.write(userList.fields(0).value)%>"/>
+										<input type="submit" value="Update"></input>
+									</form>
+								</td>
 							</tr>
 						<%
 							userList.MoveNext
