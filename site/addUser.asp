@@ -9,6 +9,7 @@
 				<form action="userService.asp" method="post">
 					<p> 
 						<label for="user">Nome:</label><br>
+						<input type="hidden" name="action" value="addUser"/>
 						<input id="user" name="user"/> 
 					</p>
 					<p> 
