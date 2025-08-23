@@ -4,39 +4,25 @@
     </head>
     <body>
         <%
-            'dbserver = ""
-            'dbcatalog = ""
-            'dblogin = ""
-            'dbpassword = ""
-            'connection string
-            'Set conn = Server.CreateObject("ADODB.Connection")
-            'conn.Open = "Provider=SQLOLEDB; Data Source=" & dbserver & ";Initial Catalog=" & dbcatalog & ";User Id=" & dblogin & ";Password=" & dbpassword
-
-            nome = Request.Form("name")
+            user = Request.Form("user")
             password = Request.Form("password")
-
+            Response.write("nome" & user & "senha" & password)
             Dim connection
 
             Set connection = Server.CreateObject("ADODB.Connection")
             
-            connection.Open "test"
-
-            if connections.errors.count = 0 then
-
-                Response.write "Connection OK"
-
-            End if
+            connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
 
             Set add = Server.CreateObject("ADODB.Recordset")
 
-            add.Open "Users", connection, 3, 3
+            add.Open "Select * from Users;", connection, 3, 3
 
             add.AddNew
-
-                add("name") = name
+                add("user") = user
                 add("password") = password
             
             add.Update
+
             add.Close
             connection.Close
 

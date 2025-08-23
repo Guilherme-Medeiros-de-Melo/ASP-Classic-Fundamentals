@@ -8,8 +8,8 @@
 				<p>ADD USER<p>
 				<form action="userService.asp" method="post">
 					<p> 
-						<label for="name">Nome:</label><br>
-						<input id="name" name="name"/> 
+						<label for="user">Nome:</label><br>
+						<input id="user" name="user"/> 
 					</p>
 					<p> 
 						<label for="password">Password:</label><br>
