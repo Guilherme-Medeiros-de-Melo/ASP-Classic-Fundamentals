@@ -4,29 +4,57 @@
     </head>
     <body>
         <%
-            user = Request.Form("user")
-            password = Request.Form("password")
-            Response.write("nome" & user & "senha" & password)
-            Dim connection
+            action = Request.Form("action")
 
-            Set connection = Server.CreateObject("ADODB.Connection")
+            if action = "addUser" then 
+                addUser()
+            elseif action = "updateUser" then
+                updateUser()
+            elseif action = "deleteUser" then
+                deleteUser()
+            elseif action = "getUser" then
+                getUser()
+            end if
             
-            connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+            Sub addUser()
+                user = Request.Form("user")
+                password = Request.Form("password")
 
-            Set add = Server.CreateObject("ADODB.Recordset")
+                Dim connection
 
-            add.Open "Select * from Users;", connection, 3, 3
+                Set connection = Server.CreateObject("ADODB.Connection")
+                
+                connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
 
-            add.AddNew
-                add("user") = user
-                add("password") = password
-            
-            add.Update
+                Set add = Server.CreateObject("ADODB.Recordset")
 
-            add.Close
-            connection.Close
+                add.Open "Select * from Users;", connection, 3, 3
 
-            Set add = Nothing
-            Set connection = Nothing
+                add.AddNew
+                    add("user") = user
+                    add("password") = password
+                
+                add.Update
+
+                Response.write("user: " & user & " added")
+
+                add.Close
+                connection.Close
+
+                Set add = Nothing
+                Set connection = Nothing
+            End Sub
+
+            Sub updateUser()
+                Response.write("user: " & user & "updated")
+            End Sub
+
+            Sub deleteUser()
+                Response.write("user: " & user & "deleted")
+            End Sub
+
+            Sub getUser()
+                Response.write("user list got")
+            End Sub
         %>
 </html>
