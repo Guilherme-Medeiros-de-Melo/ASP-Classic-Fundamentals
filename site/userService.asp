@@ -13,7 +13,7 @@
                 connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
 	        End Sub
             
-            Sub addUser(user, password)
+            Sub addUser(user, password, role)
                 Dim connection	
                 Set connection = Server.CreateObject("ADODB.Connection")
                 
@@ -25,6 +25,7 @@
                 rs.AddNew
                     rs("user") = user
                     rs("password") = password
+                    rs("role") = role
                 
                 rs.Update
 
@@ -39,21 +40,20 @@
                 aspLog("Users got")
             End Sub
 
-            Sub updateUser()
+            Sub updateUser(userId, user, password, role)
                 Dim connection	
                 Set connection = Server.CreateObject("ADODB.Connection")
                 
                 connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
 
-                userId = Request.Form("userId")
-
                 Set rs = Server.CreateObject("ADODB.Recordset")
                 rs.Open "Select * from Users Where id=" & userId & ";", connection, 3, 3
 
                 rs.UpdateBatch
-                    rs("user") = "UPDATED"
-                    rs("password") = "UPDATED"
-                
+                    rs("user") = user
+                    rs("password") = password
+                    rs("role") = role
+
                 rs.Update
 
                 rs.Close

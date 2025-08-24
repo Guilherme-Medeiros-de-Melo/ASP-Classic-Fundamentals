@@ -35,15 +35,16 @@
 		<div style="width: 20%; text-align: center; float: left;">
 			<ul>
 				<p>USERS</p>
-				<a href="addUser.asp">Add</a>
-				<a href="addUser.asp">Update</a>
-				<a href="addUser.asp">Delete</a>
+				<form action="addUser.asp" method="post">
+					<input type="submit" value="Add User">
+				</form>
 				<p/>
 				<table style="width: 100%;">
 					<tr>
 						<th>Id</th>
 						<th>User</th>
 						<th>Password</th>
+						<th>Role</th>
 						<th style="width:10%;">Action</th>
 					</tr>
 						<%
@@ -52,8 +53,9 @@
 								<td><%response.write(userList.fields(0).value)%></td>
 								<td><%response.write(userList.fields(1).value)%></td>
 								<td><%response.write(userList.fields(2).value)%></td>
+								<td><%response.write(userList.fields(3).value)%></td>
 								<td>
-									<form action="userServiceAux.asp" method="post">
+									<form action="addUser.asp" method="post">
 										<input type="hidden" name="action" value="updateUser"/>
 										<input type="hidden" name="userId" value="<%response.write(userList.fields(0).value)%>"/>
 										<input type="submit" value="Update"></input>

@@ -12,11 +12,12 @@
 		userId = Request.Form("userId")
 		user = Request.Form("user")
         password = Request.Form("password")
+		role = Request.Form("role")
 
 		if action = "addUser" then 
-                userServ.addUser user, password
+                userServ.addUser user, password, role
         elseif action = "updateUser" then
-                userServ.updateUser
+                userServ.updateUser userId, user, password, role
         elseif action = "deleteUser" then
                 userServ.deleteUser userId
         elseif action = "getUser" then
