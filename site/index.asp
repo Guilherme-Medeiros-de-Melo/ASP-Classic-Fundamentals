@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<!--#include file="userService.asp"-->
+		<!--#include file="taskService.asp"-->
 		<title>User Control</title>
 		<style>
 			* {
@@ -15,10 +16,6 @@
   				padding-bottom: 3px;
 			}
 
-			div {
-				width: 50%;
-			}
-
 			th {
 				width: 30%;
 			}
@@ -31,8 +28,14 @@
 
 		Dim userList
 		Set userList = userServ.getUsers
+
+		Dim taskServ
+		Set taskServ = new taskService
+
+		Dim taskList
+		Set taskList = taskServ.getTasks
 		%>
-		<div style="width: 20%; text-align: center; float: left;">
+		<div style="width: 40%; text-align: center; float: left;">
 			<ul>
 				<p>USERS</p>
 				<form action="addUser.asp" method="post">
@@ -41,7 +44,7 @@
 				<p/>
 				<table style="width: 100%;">
 					<tr>
-						<th>Id</th>
+						<th style="width:10%;">Id</th>
 						<th>User</th>
 						<th>Password</th>
 						<th>Role</th>
@@ -71,37 +74,48 @@
 							userList.MoveNext
 						Loop
 						%>
-					</tr>
 				</table>
 			</ul>
 		</div>
-		<div style="width: 20%; text-align: center; float: left;">
+		<div style="width: 40%; text-align: center; float: left;">
 			<ul>
 				<p>USER TASKS</p>
-				<a href="addTask.asp">Add</a>
-				<a href="addTask.asp">Update</a>
-				<a href="addTask.asp">Delete</a>
+				<a href="addTask.asp">Add Task</a>
 				<p/>
 				<table style="width: 100%;">
 					<tr>
-						<th>Id</th>
-						<th>User</th>
-						<th>Password</th>
+						<th style="width:10%;">Id</th>
+						<th>User Id</th>
+						<th>Description</th>
+						<th>Added Date</th>
+						<th>Due Date</th>
 						<th style="width:10%;">Action</th>
 					</tr>
 						<%
-						Do Until userList.EOF%>
+						Do Until taskList.EOF%>
 							<tr>
-								<td><%response.write(userList.fields(0).value)%></td>
-								<td><%response.write(userList.fields(1).value)%></td>
-								<td><%response.write(userList.fields(2).value)%></td>
-								<td><a href="test.html">Update</a></td>
+								<td><%response.write(taskList.fields(0).value)%></td>
+								<td><%response.write(taskList.fields(1).value)%></td>
+								<td><%response.write(taskList.fields(2).value)%></td>
+								<td><%response.write(taskList.fields(3).value)%></td>
+								<td><%response.write(taskList.fields(4).value)%></td>
+								<td>
+									<form action="addUser.asp" method="post">
+										<input type="hidden" name="action" value="updateUser"/>
+										<input type="hidden" name="userId" value="<%response.write(taskList.fields(0).value)%>"/>
+										<input type="submit" value="Update"></input>
+									</form>
+									<form action="userServiceAux.asp" method="post">
+										<input type="hidden" name="action" value="deleteUser"/>
+										<input type="hidden" name="userId" value="<%response.write(taskList.fields(0).value)%>"/>
+										<input type="submit" value="Delete"></input>
+									</form>
+								</td>
 							</tr>
 						<%
-							userList.MoveNext
+							taskList.MoveNext
 						Loop
 						%>
-					</tr>
 				</table>
 			</ul>
 		</div>
