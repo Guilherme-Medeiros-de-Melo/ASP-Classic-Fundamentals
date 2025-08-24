@@ -6,10 +6,10 @@
 		<div style="text-align: left; position: absolute;">
 			<ul>
 				<p>ADD USER<p>
-				<form action="userService.asp" method="post">
+				<form action="userServiceAux.asp" method="post">
+					<input type="hidden" name="action" value="addUser"/>
 					<p> 
 						<label for="user">Nome:</label><br>
-						<input type="hidden" name="action" value="addUser"/>
 						<input id="user" name="user"/> 
 					</p>
 					<p> 

@@ -4,27 +4,21 @@
     </head>
     <body>
         <%
+        class userService
             Dim connection
-            Set connection = Server.CreateObject("ADODB.Connection")
+            Private Sub Class_Initialize()	
+                Dim connection	
+                Set connection = Server.CreateObject("ADODB.Connection")
                 
-            connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
-
-            action = Request.Form("action")
-
-            if action = "addUser" then 
-                addUser()
-            elseif action = "updateUser" then
-                updateUser()
-            elseif action = "deleteUser" then
-                deleteUser()
-            elseif action = "getUser" then
-                getUser()
-            end if
+                connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+	        End Sub
             
-            Sub addUser()
-                user = Request.Form("user")
-                password = Request.Form("password")
-
+            Sub addUser(user, password)
+                Dim connection	
+                Set connection = Server.CreateObject("ADODB.Connection")
+                
+                connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+                
                 Set rs = Server.CreateObject("ADODB.Recordset")
                 rs.Open "Select * from Users;", connection, 3, 3
 
@@ -41,9 +35,16 @@
 
                 Set rs = Nothing
                 Set connection = Nothing
+
+                aspLog("Users got")
             End Sub
 
             Sub updateUser()
+                Dim connection	
+                Set connection = Server.CreateObject("ADODB.Connection")
+                
+                connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+
                 userId = Request.Form("userId")
 
                 Set rs = Server.CreateObject("ADODB.Recordset")
@@ -61,15 +62,33 @@
                 Set rs = Nothing
                 Set connection = Nothing
 
-                Response.write("user: " & user & "updated")
+                aspLog("Users got")
             End Sub
 
-            Sub deleteUser()
-                Response.write("user: " & user & "deleted")
+            Sub deleteUser(userId)
+                Dim connection	
+                Set connection = Server.CreateObject("ADODB.Connection")
+
+                connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+                
+                connection.Execute("Delete from Users Where id="&userId&";")
+                aspLog("Users got")
             End Sub
 
-            Sub getUser()
-                Response.write("user list got")
-            End Sub
+            Function getUsers()
+                Dim connection	
+                Set connection = Server.CreateObject("ADODB.Connection")
+
+                connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+                
+                Set getUsers = connection.Execute("select * from Users;")
+                aspLog("Users got")
+            End Function
+
+            function aspLog(value)
+                response.Write("<script language=javascript>console.log(`'" & value & "'`); </script>")
+            end function
+
+        End Class
         %>
 </html>

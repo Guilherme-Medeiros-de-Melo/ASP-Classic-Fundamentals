@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<!--#include file="userService.asp"-->
 		<title>User Control</title>
 		<style>
 			* {
@@ -25,13 +26,11 @@
 	</head>
 	<body>
 		<%
-		Set connection = Server.CreateObject("ADODB.Connection")
-                
-        connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
+		Dim userServ
+		Set userServ = new userService
 
 		Dim userList
-
-		Set userList = connection.Execute("select * from Users;")
+		Set userList = userServ.getUsers
 		%>
 		<div style="width: 20%; text-align: center; float: left;">
 			<ul>
@@ -54,10 +53,15 @@
 								<td><%response.write(userList.fields(1).value)%></td>
 								<td><%response.write(userList.fields(2).value)%></td>
 								<td>
-									<form action="userService.asp" method="post">
+									<form action="userServiceAux.asp" method="post">
 										<input type="hidden" name="action" value="updateUser"/>
 										<input type="hidden" name="userId" value="<%response.write(userList.fields(0).value)%>"/>
 										<input type="submit" value="Update"></input>
+									</form>
+									<form action="userServiceAux.asp" method="post">
+										<input type="hidden" name="action" value="deleteUser"/>
+										<input type="hidden" name="userId" value="<%response.write(userList.fields(0).value)%>"/>
+										<input type="submit" value="Delete"></input>
 									</form>
 								</td>
 							</tr>
