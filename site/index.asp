@@ -100,14 +100,14 @@
 								<td><%response.write(taskList.fields(3).value)%></td>
 								<td><%response.write(taskList.fields(4).value)%></td>
 								<td>
-									<form action="addUser.asp" method="post">
-										<input type="hidden" name="action" value="updateUser"/>
-										<input type="hidden" name="userId" value="<%response.write(taskList.fields(0).value)%>"/>
+									<form action="addTask.asp" method="post">
+										<input type="hidden" name="action" value="updateTask"/>
+										<input type="hidden" name="taskId" value="<%response.write(taskList.fields(0).value)%>"/>
 										<input type="submit" value="Update"></input>
 									</form>
-									<form action="userServiceAux.asp" method="post">
-										<input type="hidden" name="action" value="deleteUser"/>
-										<input type="hidden" name="userId" value="<%response.write(taskList.fields(0).value)%>"/>
+									<form action="taskServiceAux.asp" method="post">
+										<input type="hidden" name="action" value="deleteTask"/>
+										<input type="hidden" name="taskId" value="<%response.write(taskList.fields(0).value)%>"/>
 										<input type="submit" value="Delete"></input>
 									</form>
 								</td>

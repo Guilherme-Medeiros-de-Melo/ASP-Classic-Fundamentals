@@ -25,6 +25,7 @@
                 rs.AddNew
                     rs("userId") = userId
                     rs("description") = description
+                    rs("addedDate") = Date()
                     rs("dueDate") = dueDate
                 
                 rs.Update
@@ -50,7 +51,6 @@
                 rs.Open "Select * from tasks Where id=" & taskId & ";", connection, 3, 3
 
                 rs.UpdateBatch
-                    rs("id") = taskId
                     rs("description") = description
                     rs("dueDate") = dueDate
 
@@ -71,7 +71,7 @@
 
                 connection.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("db_controller.mdb") & ";"
                 
-                connection.Execute("Delete from Tasks Where id="&taskId&";")
+                connection.Execute("Delete from Tasks Where id="& taskId &";")
                 
                 aspLog("task deleted")
             End Sub
